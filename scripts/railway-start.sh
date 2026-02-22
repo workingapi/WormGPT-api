@@ -1,5 +1,5 @@
-#!/bin/bash
-# WormGPT Railway Startup Script
+#!/bin/sh
+# WormGPT Railway Startup Script (Alpine-compatible)
 
 echo "🚀 Starting WormGPT Qwen API..."
 

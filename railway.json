@@ -17,7 +17,7 @@
     }
   },
   "deploy": {
-    "startCommand": "bash scripts/railway-start.sh",
+    "startCommand": "sh scripts/railway-start.sh",
     "healthcheckPath": "/qwen/health",
     "healthcheckTimeout": 120,
     "restartPolicyType": "ON_FAILURE",
