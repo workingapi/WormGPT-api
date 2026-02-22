@@ -45,6 +45,18 @@ Set these in your Railway dashboard:
 | `OPENROUTER_API_KEY` | OpenRouter API key for Qwen models | `sk-or-...` |
 | `JWT_SECRET` | Random secret for sessions | `your-secret-here` |
 
+### ⚠️ Important: Why You Need an API Key
+
+**Puter.com** provides free Qwen access through their hosted platform (`api.puter.com`) using their "User-Pays" model where each user's activity covers costs.
+
+When **self-hosting on Railway**, you're running your own instance, so you need to configure an AI provider:
+
+- **OpenRouter** (recommended): All Qwen models, free tier available
+- **TogetherAI**: Alternative provider with some Qwen models
+- **Direct Qwen API**: If you have Alibaba Cloud access
+
+**Free Option**: OpenRouter provides `qwen/qwen-3-4b:free` completely free!
+
 ### Optional
 
 | Variable | Description | Default |
@@ -164,15 +176,17 @@ Check API health status.
 
 ## 🎯 Available Qwen Models
 
-| Model ID | Name | Context | Best For |
-|----------|------|---------|----------|
-| `qwen/qwen-3-4b:free` | Qwen 3 4B | 32K | General chat, free tier |
-| `qwen/qwen-3-30b-a3b-instruct` | Qwen 3 30B | 128K | Balanced performance |
-| `qwen/qwen-3-32b-instruct` | Qwen 3 32B | 128K | Instruction following |
-| `qwen/qwen-3-235b-a22b-instruct-128k` | Qwen 3 235B | 128K | Advanced conversations |
-| `qwen/qwen-3-coder-480b-a35b-instruct` | Qwen 3 Coder 480B | 256K | Code generation |
-| `qwen/qwen-3-max-thinking` | Qwen 3 Max Thinking | 64K | Complex reasoning |
-| `qwen/qwen-3-vl-235b-a22b-instruct` | Qwen 3 Vision 235B | 128K | Image analysis |
+| Model ID | Name | Context | Pricing | Best For |
+|----------|------|---------|---------|----------|
+| `qwen/qwen-3-4b:free` | Qwen 3 4B | 32K | 🆓 **FREE** | General chat, testing |
+| `qwen/qwen-3-30b-a3b-instruct` | Qwen 3 30B | 128K | 💰 Paid | Balanced performance |
+| `qwen/qwen-3-32b-instruct` | Qwen 3 32B | 128K | 💰 Paid | Instruction following |
+| `qwen/qwen-3-235b-a22b-instruct-128k` | Qwen 3 235B | 128K | 💰 Paid | Advanced conversations |
+| `qwen/qwen-3-coder-480b-a35b-instruct` | Qwen 3 Coder 480B | 256K | 💰 Paid | Code generation |
+| `qwen/qwen-3-max-thinking` | Qwen 3 Max Thinking | 64K | 💰 Paid | Complex reasoning |
+| `qwen/qwen-3-vl-235b-a22b-instruct` | Qwen 3 Vision 235B | 128K | 💰 Paid | Image analysis |
+
+**Note**: The free model (`qwen/qwen-3-4b:free`) is perfect for most use cases! Paid models offer better quality for complex tasks.
 
 ## 💻 Integration Examples
 
