@@ -9,39 +9,18 @@
         },
         "setup": {
           "cmds": [
-            "mkdir -p volatile/config",
-            "echo '{}' > volatile/config/config.json"
+            "mkdir -p volatile/config volatile/runtime scripts",
+            "chmod +x scripts/railway-start.sh"
           ]
         }
-      },
-      "packages": ["redis"]
+      }
     }
   },
   "deploy": {
-    "startCommand": "npm run build:ts && npm start",
+    "startCommand": "bash scripts/railway-start.sh",
     "healthcheckPath": "/qwen/health",
-    "healthcheckTimeout": 300,
+    "healthcheckTimeout": 120,
     "restartPolicyType": "ON_FAILURE",
-    "restartPolicyMaxRetries": 10,
-    "numReplicas": 1,
-    "scaling": {
-      "min": 1,
-      "max": 50,
-      "cpu_threshold": 70,
-      "memory_threshold": 80
-    },
-    "regions": ["us-east-1", "us-west-1", "eu-west-1"],
-    "load_balancer": {
-      "enabled": true,
-      "algorithm": "round_robin",
-      "sticky_sessions": false
-    }
-  },
-  "services": {
-    "redis": {
-      "type": "redis",
-      "version": "7",
-      "memory": "1GB"
-    }
+    "restartPolicyMaxRetries": 10
   }
 }
