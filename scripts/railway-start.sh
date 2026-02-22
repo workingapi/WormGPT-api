@@ -1,7 +1,9 @@
 #!/bin/sh
 # WormGPT Railway Startup Script (Alpine-compatible)
+# FREE TIER - NO API KEY REQUIRED
 
-echo "🚀 Starting WormGPT Qwen API..."
+echo "🚀 Starting WormGPT Qwen API - FREE TIER..."
+echo "✨ No API key required - using free qwen/qwen-3-4b:free model"
 
 # Set defaults if not provided
 export PORT=${PORT:-4100}
@@ -23,7 +25,8 @@ if [ ! -f volatile/config/config.json ]; then
     "allow_anonymous_api_access": true,
     "api_allow_no_auth": true,
     "domain": "0.0.0.0",
-    "protocol": "http"
+    "protocol": "http",
+    "free_tier_only": true
 }
 EOF
 fi
@@ -32,9 +35,17 @@ fi
 echo "⚙️  Configuration:"
 echo "   PORT: $PORT"
 echo "   NODE_ENV: $NODE_ENV"
-echo "   OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:+***CONFIGURED***}"
-echo "   OPENROUTER_API_KEYS: ${OPENROUTER_API_KEYS:+***CONFIGURED***}"
+echo "   Model: qwen/qwen-3-4b:free (FREE)"
+echo "   API Key Required: NO"
+echo "   OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:+***OPTIONAL***}"
+echo "   OPENROUTER_API_KEYS: ${OPENROUTER_API_KEYS:+***OPTIONAL***}"
 echo "   REDIS_URL: ${REDIS_URL:+***CONFIGURED***}"
+echo ""
+echo "📊 Free Tier Limits:"
+echo "   - Default: 100 req/min (no API key)"
+echo "   - Premium: 1000 req/min (with user API key)"
+echo "   - Get your FREE unlimited key: POST /api-keys/generate"
+echo ""
 
 # Start the application
 echo "🌟 Starting Puter server..."

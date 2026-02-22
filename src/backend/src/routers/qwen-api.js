@@ -12,10 +12,11 @@ const cacheService = require('../services/ResponseCacheService');
 const ContextManager = require('../services/ContextManager');
 
 /**
- * Public Qwen 3 AI API endpoint - Production-ready for millions of requests
+ * Public Qwen 3 AI API endpoint - FREE TIER ONLY
+ * No API key required - uses free Qwen models
  * Features:
+ * - Free qwen/qwen-3-4b:free model (unlimited)
  * - Distributed rate limiting (Redis-backed)
- * - Multi-key rotation for unlimited throughput
  * - Response caching for instant replies
  * - Context management for long conversations
  * - Auto-scaling ready
@@ -75,7 +76,7 @@ router.use((req, res, next) => {
 });
 
 /**
- * GET /models - List available Qwen models
+ * GET /models - List available FREE Qwen models
  */
 Endpoint({
     path: '/models',
@@ -88,68 +89,24 @@ Endpoint({
                     {
                         id: 'qwen/qwen-3-4b:free',
                         name: 'Qwen 3 4B (Free)',
-                        description: 'Free tier for general chat - UNLIMITED',
+                        description: 'Free tier for general chat - UNLIMITED - NO API KEY REQUIRED',
                         context_length: 32768,
-                        pricing: 'FREE',
-                        rate_limit: '20/min',
+                        pricing: '100% FREE',
+                        rate_limit: 'UNLIMITED with user API key',
+                        api_key_required: false,
                         recommended_for: ['general_chat', 'casual_conversation', 'high_volume'],
-                    },
-                    {
-                        id: 'qwen/qwen-3-30b-a3b-instruct',
-                        name: 'Qwen 3 30B A3B Instruct',
-                        description: 'Balanced performance for general tasks',
-                        context_length: 131072,
-                        pricing: '$0.00035/1K tokens',
-                        recommended_for: ['general_chat', 'writing', 'analysis'],
-                    },
-                    {
-                        id: 'qwen/qwen-3-32b-instruct',
-                        name: 'Qwen 3 32B Instruct',
-                        description: 'Efficient instruction following',
-                        context_length: 131072,
-                        pricing: '$0.00038/1K tokens',
-                        recommended_for: ['instruction_following', 'tasks'],
-                    },
-                    {
-                        id: 'qwen/qwen-3-235b-a22b-instruct-128k',
-                        name: 'Qwen 3 235B A22B Instruct',
-                        description: 'Advanced conversations with 128K context',
-                        context_length: 131072,
-                        pricing: '$0.0008/1K tokens',
-                        recommended_for: ['advanced_chat', 'long_context', 'complex_tasks'],
-                    },
-                    {
-                        id: 'qwen/qwen-3-coder-480b-a35b-instruct',
-                        name: 'Qwen 3 Coder 480B',
-                        description: 'Code generation and programming tasks',
-                        context_length: 256000,
-                        pricing: '$0.0015/1K tokens',
-                        recommended_for: ['coding', 'programming', 'code_review', 'debugging'],
-                    },
-                    {
-                        id: 'qwen/qwen-3-max-thinking',
-                        name: 'Qwen 3 Max Thinking',
-                        description: 'Complex reasoning and problem solving',
-                        context_length: 65536,
-                        pricing: '$0.002/1K tokens',
-                        recommended_for: ['reasoning', 'math', 'science', 'analysis'],
-                    },
-                    {
-                        id: 'qwen/qwen-3-vl-235b-a22b-instruct',
-                        name: 'Qwen 3 Vision 235B',
-                        description: 'Image analysis and visual understanding',
-                        context_length: 131072,
-                        pricing: '$0.001/1K tokens + $0.001/image',
-                        recommended_for: ['image_analysis', 'visual_qa', 'ocr', 'diagrams'],
                     },
                 ],
                 default_model: 'qwen/qwen-3-4b:free',
-                api_version: '2.0.0',
+                api_version: '3.0.0-FREE',
+                note: 'This deployment uses ONLY free Qwen models. No API key required!',
                 features: {
+                    free_tier: '100% free qwen/qwen-3-4b:free model',
+                    no_api_key: 'No OpenRouter API key needed',
                     rate_limiting: 'Distributed Redis-backed rate limiting',
                     caching: 'Response caching for improved performance',
                     context_management: 'Automatic context window handling',
-                    api_key_rotation: 'Multi-key rotation for high availability',
+                    user_api_keys: 'Get unlimited API keys at /api-keys/generate',
                 },
                 scaling: {
                     max_requests_per_minute: 'Configurable (default: 100, premium: 1000, unlimited: 100000)',
