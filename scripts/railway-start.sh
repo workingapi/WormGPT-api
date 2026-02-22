@@ -18,15 +18,22 @@ if [ ! -f volatile/config/config.json ]; then
     echo "📝 Creating default configuration..."
     cat > volatile/config/config.json << 'EOF'
 {
+    "$": "user-config",
+    "config_name": "production",
+    "title": "WormGPT Qwen API",
+    "short_description": "FREE Qwen AI API - No API Key Required",
+    "domain": "0.0.0.0",
+    "protocol": "http",
+    "pub_port": 8080,
+    "http_port": 8080,
     "captcha": {
         "enabled": false
     },
     "disable_temp_users": false,
     "allow_anonymous_api_access": true,
     "api_allow_no_auth": true,
-    "domain": "0.0.0.0",
-    "protocol": "http",
-    "free_tier_only": true
+    "free_tier_only": true,
+    "disable_fallback_mechanisms": false
 }
 EOF
 fi
