@@ -529,7 +529,7 @@ const en = {
         'window_title_public': 'Public',
         'window_title_videos': 'Videos',
         'window_title_pictures': 'Pictures',
-        'window_title_puter': 'Puter',
+        'window_title_puter': 'WormGPT',
         'window_folder_empty': 'This folder is empty',
 
         // Website Management

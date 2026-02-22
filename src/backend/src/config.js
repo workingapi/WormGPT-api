@@ -86,9 +86,9 @@ config.app_max_icon_size = 5 * 1024 * 1024;
 
 config.defaultjs_asset_path = '../../';
 
-config.short_description = 'Puter is a privacy-first personal cloud that houses all your files, apps, and games in one private and secure place, accessible from anywhere at any time.';
-config.title = 'Puter';
-config.company = 'Puter Technologies Inc.';
+config.short_description = 'WormGPT is a privacy-first personal cloud that houses all your files, apps, and games in one private and secure place, accessible from anywhere at any time.';
+config.title = 'WormGPT';
+config.company = 'WormGPT Technologies Inc.';
 
 config.puter_hosted_data = {
     puter_versions: 'https://version.puter.site/puter_versions.json',
@@ -254,8 +254,10 @@ const config_pointer = {};
             const logger = Context.get('logger', { allow_fallback: true });
             // If no logger, just give up
             if ( logger ) {
-                logger.debug('\x1B[36;1mCONFIGURATION MUTATED AT RUNTIME\x1B[0m',
-                                { prop, value });
+                logger.debug(
+                    '\x1B[36;1mCONFIGURATION MUTATED AT RUNTIME\x1B[0m',
+                    { prop, value },
+                );
             }
             target[prop] = value;
             return true;

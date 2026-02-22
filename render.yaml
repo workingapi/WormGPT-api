@@ -1,0 +1,15 @@
+version: 2
+
+services:
+  - type: node
+    name: wormgpt
+    root: .
+    buildCommand: npm install && npm run build:ts
+    startCommand: npm start
+    healthcheckPath: /healthcheck
+    healthcheckTimeout: 100
+    env:
+      - key: NODE_VERSION
+        value: 22
+      - key: PORT
+        value: 4100

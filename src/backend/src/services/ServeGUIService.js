@@ -38,6 +38,9 @@ class ServeGUIService extends BaseService {
     async '__on_install.routes-gui' () {
         const { app } = this.services.get('web-server');
 
+        // Public Qwen 3 AI API - No authentication required
+        app.use('/qwen', require('../routers/qwen-api'));
+
         // is this a puter.site domain?
         require('../routers/hosting/puter-site')(app);
 

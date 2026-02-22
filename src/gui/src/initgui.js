@@ -867,12 +867,14 @@ window.initgui = async function (options) {
                                     }
                                     // upload
                                     try {
-                                        const res = await puter.fs.write(target_path,
-                                                        file_to_upload,
-                                                        {
-                                                            dedupeName: false,
-                                                            overwrite: overwrite,
-                                                        });
+                                        const res = await puter.fs.write(
+                                            target_path,
+                                            file_to_upload,
+                                            {
+                                                dedupeName: false,
+                                                overwrite: overwrite,
+                                            },
+                                        );
 
                                         let file_signature = await puter.fs.sign(app_uid, { uid: res.uid, action: 'write' });
                                         file_signature = file_signature.items;
@@ -1454,12 +1456,14 @@ window.initgui = async function (options) {
                                 }
                                 // upload
                                 try {
-                                    const res = await puter.fs.write(target_path,
-                                                    file_to_upload,
-                                                    {
-                                                        dedupeName: false,
-                                                        overwrite: overwrite,
-                                                    });
+                                    const res = await puter.fs.write(
+                                        target_path,
+                                        file_to_upload,
+                                        {
+                                            dedupeName: false,
+                                            overwrite: overwrite,
+                                        },
+                                    );
 
                                     let file_signature = await puter.fs.sign(app_uid, { uid: res.uid, action: 'write' });
                                     file_signature = file_signature.items;
@@ -1669,7 +1673,7 @@ window.initgui = async function (options) {
                 update_title_based_on_uploads();
             }
         } else if ( window.active_uploads ) {
-            document.title = window.doc_title_before_blur ?? 'Puter';
+            document.title = window.doc_title_before_blur ?? window.gui?.title ?? 'WormGPT';
         }
     });
 
