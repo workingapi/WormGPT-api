@@ -41,6 +41,9 @@ class ServeGUIService extends BaseService {
         // Public Qwen 3 AI API - No authentication required
         app.use('/qwen', require('../routers/qwen-api'));
 
+        // User API Key Management - Generate and manage API keys
+        app.use('/', require('../routers/user-api-keys'));
+
         // is this a puter.site domain?
         require('../routers/hosting/puter-site')(app);
 
