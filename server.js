@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const { puter } = require('@heyputer/puter.js');
+const path = require('path');
 require('dotenv').config();
 
 const app = express();
@@ -14,6 +15,14 @@ app.use(cors({
 }));
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
+
+// Serve static files
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Serve auth page
+app.get('/auth', (req, res) => {
+    res.sendFile(path.join(__dirname, 'auth.html'));
+});
 
 // Request logging
 app.use((req, res, next) => {

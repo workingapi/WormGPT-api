@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WormGPT - Qwen AI Authentication</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0f0f0f 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: rgba(20, 20, 30, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 0 60px rgba(138, 43, 226, 0.3), 0 0 100px rgba(75, 0, 130, 0.2);
+            overflow: hidden;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            padding: 40px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            color: #fff;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(138, 43, 226, 0.8);
+        }
+
+        .header h1 span {
+            color: #00ff88;
+        }
+
+        .header p {
+            color: #b19cd9;
+            font-size: 14px;
+        }
+
+        .status-box {
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .status-box.authenticated {
+            background: rgba(0, 255, 136, 0.15);
+            border-color: rgba(0, 255, 136, 0.5);
+        }
+
+        .status-box.error {
+            background: rgba(255, 0, 0, 0.1);
+            border-color: rgba(255, 0, 0, 0.3);
+        }
+
+        .status-box h3 {
+            color: #00ff88;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .status-box.error h3 {
+            color: #ff6b6b;
+        }
+
+        .status-box p {
+            color: #b19cd9;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #8a2be2 0%, #4b0082 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(138, 43, 226, 0.5);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #2d2d44 0%, #1a1a2e 100%);
+            border: 1px solid rgba(138, 43, 226, 0.3);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #dc3545 0%, #8b0000 100%);
+        }
+
+        .token-display {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .token-display label {
+            display: block;
+            color: #b19cd9;
+            font-size: 12px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .token-display input {
+            width: 100%;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            border-radius: 6px;
+            color: #00ff88;
+            font-family: monospace;
+            font-size: 13px;
+        }
+
+        .token-display input:focus {
+            outline: none;
+            border-color: #8a2be2;
+        }
+
+        .features {
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(138, 43, 226, 0.2);
+        }
+
+        .features h4 {
+            color: #fff;
+            font-size: 14px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .feature-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #b19cd9;
+            font-size: 13px;
+        }
+
+        .feature-item::before {
+            content: '✓';
+            color: #00ff88;
+            font-weight: bold;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🐛 <span>Worm</span>GPT</h1>
+            <p>Qwen AI Authentication Portal</p>
+        </div>
+
+        <div id="auth-status">
+            <div class="status-box error">
+                <h3>⚠️ Not Authenticated</h3>
+                <p>You need to authenticate with Puter to use the Qwen AI API. Click the button below to sign in.</p>
+            </div>
+
+            <button class="btn" onclick="authenticate()" id="auth-btn">
+                🔐 Sign in with Puter
+            </button>
+        </div>
+
+        <div id="authenticated-status" class="hidden">
+            <div class="status-box authenticated">
+                <h3>✅ Authenticated</h3>
+                <p>You are now authenticated and can use all Qwen AI models without restrictions.</p>
+            </div>
+
+            <div class="token-display">
+                <label>Your Auth Token (save this):</label>
+                <input type="text" id="auth-token" readonly>
+            </div>
+
+            <button class="btn btn-secondary" onclick="testConnection()">
+                🧪 Test Connection
+            </button>
+
+            <button class="btn btn-danger" onclick="logout()">
+                🚪 Logout
+            </button>
+        </div>
+
+        <div class="features">
+            <h4>✨ Features After Authentication</h4>
+            <div class="feature-list">
+                <div class="feature-item">Unlimited Requests</div>
+                <div class="feature-item">25+ Qwen Models</div>
+                <div class="feature-item">No Rate Limits</div>
+                <div class="feature-item">Fast Response</div>
+                <div class="feature-item">Code Generation</div>
+                <div class="feature-item">Image Analysis</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://js.puter.com/v2/"></script>
+    <script>
+        const authStatusDiv = document.getElementById('auth-status');
+        const authenticatedStatusDiv = document.getElementById('authenticated-status');
+        const authTokenInput = document.getElementById('auth-token');
+        const authBtn = document.getElementById('auth-btn');
+
+        // Check if already authenticated
+        async function checkAuth() {
+            try {
+                const user = await puter.auth.getUser();
+                if (user) {
+                    showAuthenticated(user);
+                }
+            } catch (error) {
+                console.log('Not authenticated');
+            }
+        }
+
+        // Authenticate with Puter
+        async function authenticate() {
+            authBtn.disabled = true;
+            authBtn.innerHTML = '<span class="loading"></span> Authenticating...';
+
+            try {
+                const user = await puter.auth.signIn();
+                showAuthenticated(user);
+            } catch (error) {
+                console.error('Authentication error:', error);
+                alert('Authentication failed: ' + error.message);
+                authBtn.disabled = false;
+                authBtn.innerHTML = '🔐 Sign in with Puter';
+            }
+        }
+
+        // Show authenticated state
+        function showAuthenticated(user) {
+            authStatusDiv.classList.add('hidden');
+            authenticatedStatusDiv.classList.remove('hidden');
+            
+            // Get and display token
+            const token = localStorage.getItem('puter_auth_token') || 'authenticated_' + user?.username;
+            authTokenInput.value = token;
+            
+            console.log('Authenticated as:', user);
+        }
+
+        // Test connection
+        async function testConnection() {
+            authBtn.disabled = true;
+            authBtn.innerHTML = '<span class="loading"></span> Testing...';
+
+            try {
+                const response = await fetch('/v1/chat/completions', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        model: 'qwen/qwen3-next-80b-a3b-instruct',
+                        messages: [{ role: 'user', content: 'Hi' }]
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (data.choices && data.choices[0]) {
+                    alert('✅ Connection successful!\n\nResponse: ' + data.choices[0].message.content);
+                } else {
+                    alert('⚠️ Response: ' + JSON.stringify(data, null, 2));
+                }
+            } catch (error) {
+                alert('❌ Error: ' + error.message);
+            } finally {
+                authBtn.disabled = false;
+                authBtn.innerHTML = '🧪 Test Connection';
+            }
+        }
+
+        // Logout
+        function logout() {
+            localStorage.removeItem('puter_auth_token');
+            location.reload();
+        }
+
+        // Initialize
+        checkAuth();
+    </script>
+</body>
+</html>
