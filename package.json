@@ -1,0 +1,30 @@
+{
+  "name": "wormgpt-qwen-api",
+  "version": "1.0.0",
+  "description": "Free unlimited Qwen AI API powered by Puter.js - No API key required",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "qwen",
+    "ai",
+    "api",
+    "wormgpt",
+    "puter",
+    "free-ai",
+    "unlimited-ai"
+  ],
+  "author": "WormGPT",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "@heyputer/puter.js": "^2.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
